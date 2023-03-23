@@ -2,13 +2,15 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
+#include "Commons.h"
+#include "Texture2D.h"
 
 using namespace std;
 
 // Globals
 SDL_Window* g_window = nullptr;
 SDL_Renderer* g_renderer = nullptr;
-SDL_Texture* g_texture = nullptr;
+Texture2D* g_texture = nullptr;
 
 // Prototypes
 bool InitSDL();
@@ -72,8 +74,9 @@ bool InitSDL()
 		}
 
 		//Load the background texture
-		g_texture = LoadTextureFromFile("Images/test.bmp");
-		if (g_texture == nullptr)
+		g_texture = new Texture2D(g_renderer);
+
+		if (!g_texture->LoadFromFile("Images/test.bmp"))
 		{
 			return false;
 		}
@@ -133,7 +136,14 @@ void Render()
 	SDL_Rect renderLocation = { 0,0,SCREEN_WIDTH, SCREEN_HEIGHT };
 
 	//Render to screen
-	SDL_RenderCopyEx(g_renderer, g_texture, NULL, &renderLocation, 0, NULL, SDL_FLIP_NONE);
+//Clear the screen
+	SDL_SetRenderDrawColor(g_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+	SDL_RenderClear(g_renderer);
+
+	g_texture->Render(Vector2D(), SDL_FLIP_NONE);
+
+	//update the screen
+	SDL_RenderPresent(g_renderer);
 
 	//update the screen
 	SDL_RenderPresent(g_renderer);
@@ -168,7 +178,8 @@ void FreeTexture()
 	//check if texture exists before removing it
 	if (g_texture != nullptr)
 	{
-		SDL_DestroyTexture(g_texture);
+		//release the texture
+		delete g_texture;
 		g_texture = nullptr;
 	}
 }
