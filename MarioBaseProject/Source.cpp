@@ -147,7 +147,7 @@ SDL_Texture* LoadTextureFromFile(string path)
 
 	//Load the image
 	SDL_Surface* p_surface = IMG_Load(path.c_str());
-	if (p_texture == nullptr)
+	if (p_surface == nullptr)
 	{
 		cout << "Unable to create texture from surface. SDL Error: " << SDL_GetError();
 		//remove the loaded surface now that we have a texture
@@ -155,6 +155,7 @@ SDL_Texture* LoadTextureFromFile(string path)
 	}
 	else
 	{
+		p_texture = SDL_CreateTextureFromSurface(g_renderer, p_surface);
 		cout << "Unable to create texture from surface. IMG Error: " << IMG_GetError();
 	}
 
