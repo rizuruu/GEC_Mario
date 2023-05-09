@@ -323,7 +323,7 @@ bool GameScreenLevel1::SetUpLevel()
 	}
 
 	mLevelTexture = new Texture2D(mRenderer);
-	if (!mLevelTexture->LoadFromFile("Images/Levels/Level1/Level1_New.png"))
+	if (!mLevelTexture->LoadFromFile("Images/Levels/Level1/Old Levels/Level_1.png"))
 	{
 		cout << "Failed to load level map texture!";
 		return false;
