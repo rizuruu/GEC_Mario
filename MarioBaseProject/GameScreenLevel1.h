@@ -50,7 +50,7 @@ private:
 	void CreatePeach(Vector2D position, FACING direction);
 
 	void UpdateCoin(float deltaTime, SDL_Event e);
-	void CreateCoin(Vector2D position);
+	void SpawnCoin(Vector2D position);
 	vector<CharacterCoin*> mCoins;
 
 	PowBlock* mPowBlock;
@@ -66,11 +66,11 @@ private:
 
 	// ENEMIES
 	void UpdateKoopas(float deltaTime, SDL_Event e);
-	void CreateKoopa(Vector2D position, FACING direction);
+	void SpawnKoopa(Vector2D position, FACING direction);
 	vector<CharacterKoopa*> mEnemyKoopa;
 
 	void UpdateGoombas(float deltaTime, SDL_Event e);
-	void CreateGoomba(Vector2D position, FACING direction);
+	void SpawnGoomba(Vector2D position, FACING direction);
 	vector<CharacterGoomba*> mEnemyGoomba;
 
 	float enemyTimer;

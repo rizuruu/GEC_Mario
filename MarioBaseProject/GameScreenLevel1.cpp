@@ -283,17 +283,17 @@ void GameScreenLevel1::Update(float deltaTime, SDL_Event e)
 		switch ((int)enemyTimer)
 		{
 		case 15000:
-			CreateKoopa(Vector2D(64, 32), FACING_RIGHT);
+			SpawnKoopa(Vector2D(64, 32), FACING_RIGHT);
 			break;
 		case 10000:
-			CreateGoomba(Vector2D(414, 32), FACING_LEFT);
+			SpawnGoomba(Vector2D(414, 32), FACING_LEFT);
 			break;
 		case 5000:
-			CreateGoomba(Vector2D(64, 32), FACING_RIGHT);
+			SpawnGoomba(Vector2D(64, 32), FACING_RIGHT);
 			break;
 		case 0:
 			enemyTimer = ENEMY_TIMER;
-			CreateKoopa(Vector2D(414, 32), FACING_LEFT);
+			SpawnKoopa(Vector2D(414, 32), FACING_LEFT);
 			break;
 		default:
 			break;
@@ -363,32 +363,32 @@ bool GameScreenLevel1::SetUpLevel()
 	mBackgroundYPos = 0.0f;
 
 	CreatePeach(Vector2D(32, 20), FACING_RIGHT);
-	CreateKoopa(Vector2D(64, 34), FACING_RIGHT);
-	CreateGoomba(Vector2D(414, 34), FACING_LEFT);
+	SpawnKoopa(Vector2D(64, 34), FACING_RIGHT);
+	SpawnGoomba(Vector2D(414, 34), FACING_LEFT);
 
 	// Create and set coin positions.
 	{
 		// Bottom-left platform
-		CreateCoin(Vector2D(25, 266));
-		CreateCoin(Vector2D(89, 266));
-		CreateCoin(Vector2D(153, 266));
+		SpawnCoin(Vector2D(25, 266));
+		SpawnCoin(Vector2D(89, 266));
+		SpawnCoin(Vector2D(153, 266));
 
 		// Bottom-right platform
-		CreateCoin(Vector2D(345, 266));
-		CreateCoin(Vector2D(409, 266));
-		CreateCoin(Vector2D(471, 266));
+		SpawnCoin(Vector2D(345, 266));
+		SpawnCoin(Vector2D(409, 266));
+		SpawnCoin(Vector2D(471, 266));
 
 		// Middle-left platform
-		CreateCoin(Vector2D(25, 170));
+		SpawnCoin(Vector2D(25, 170));
 
 		// Middle platform
-		CreateCoin(Vector2D(153, 138));
-		CreateCoin(Vector2D(217, 138));
-		CreateCoin(Vector2D(281, 138));
-		CreateCoin(Vector2D(345, 138));
+		SpawnCoin(Vector2D(153, 138));
+		SpawnCoin(Vector2D(217, 138));
+		SpawnCoin(Vector2D(281, 138));
+		SpawnCoin(Vector2D(345, 138));
 
 		// Middle-right platform
-		CreateCoin(Vector2D(471, 170));
+		SpawnCoin(Vector2D(471, 170));
 	}
 
 	return true;
@@ -746,19 +746,19 @@ void GameScreenLevel1::CreatePeach(Vector2D position, FACING direction)
 	characterPeach = new CharacterPeach(mRenderer, "Images/Objects/Peach.png", mLevelMap, position, direction);
 }
 
-void GameScreenLevel1::CreateKoopa(Vector2D position, FACING direction)
+void GameScreenLevel1::SpawnKoopa(Vector2D position, FACING direction)
 {
 	CharacterKoopa* characterKoopa = new CharacterKoopa(mRenderer, "Images/Enemies/Koopa.png", mLevelMap, position, direction);
 	mEnemyKoopa.push_back(characterKoopa);
 }
 
-void GameScreenLevel1::CreateGoomba(Vector2D position, FACING direction)
+void GameScreenLevel1::SpawnGoomba(Vector2D position, FACING direction)
 {
 	CharacterGoomba* characterGoomba = new CharacterGoomba(mRenderer, "Images/Enemies/GoombaNPC.png", mLevelMap, position, direction);
 	mEnemyGoomba.push_back(characterGoomba);
 }
 
-void GameScreenLevel1::CreateCoin(Vector2D position)
+void GameScreenLevel1::SpawnCoin(Vector2D position)
 {
 	CharacterCoin* characterCoin = new CharacterCoin(mRenderer, "Images/Objects/Coin.png", mLevelMap, position);
 	mCoins.push_back(characterCoin);
