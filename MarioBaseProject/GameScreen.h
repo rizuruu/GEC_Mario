@@ -26,9 +26,6 @@ public:
 	int marioScore;
 	int marioSavedPeach;
 
-	int luigiScore;
-	int luigiSavedPeach;
-
 	void CheckPaused(SDL_Event e);
 	bool paused;
 
@@ -36,11 +33,9 @@ public:
 	bool OpenOutFiles();
 	void WriteToFiles();
 	ofstream marioFileOut;
-	ofstream luigiFileOut;
 
 	bool OpenInFiles();
 	ifstream marioFileIn;
-	ifstream luigiFileIn;
 
 	// FONTS
 	void LoadFont();
@@ -105,25 +100,6 @@ public:
 	SDL_Surface* marioWinTextSurface;
 	SDL_Texture* marioWinText;
 	SDL_Rect marioWinTextRect;
-
-	// Luigi text
-	SDL_Surface* luigiTextSurface;
-	SDL_Texture* luigiText;
-	SDL_Rect luigiTextRect;
-
-	SDL_Surface* luigiScoreTextSurface;
-	SDL_Texture* luigiScoreText;
-	SDL_Rect luigiScoreTextRect;
-	string luigiScoreString;
-
-	SDL_Surface* luigiFinalScoreTextSurface;
-	SDL_Texture* luigiFinalScoreText;
-	SDL_Rect luigiFinalScoreTextRect;
-	string luigiFinalScoreString;
-
-	SDL_Surface* luigiWinTextSurface;
-	SDL_Texture* luigiWinText;
-	SDL_Rect luigiWinTextRect;
 
 	// Peach text
 	SDL_Surface* peachTextSurface;

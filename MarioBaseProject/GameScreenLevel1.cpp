@@ -56,18 +56,10 @@ GameScreenLevel1::~GameScreenLevel1()
 	{
 		marioFileOut.close();
 	}
-	if (luigiFileOut.is_open())
-	{
-		luigiFileOut.close();
-	}
 
 	if (marioFileIn.is_open())
 	{
 		marioFileIn.close();
-	}
-	if (luigiFileIn.is_open())
-	{
-		luigiFileIn.close();
 	}
 
 	// ENEMIES
@@ -139,10 +131,6 @@ GameScreenLevel1::~GameScreenLevel1()
 	SDL_DestroyTexture(marioScoreText);
 	SDL_DestroyTexture(marioFinalScoreText);
 	SDL_DestroyTexture(marioWinText);
-	SDL_DestroyTexture(luigiText);
-	SDL_DestroyTexture(luigiScoreText);
-	SDL_DestroyTexture(luigiFinalScoreText);
-	SDL_DestroyTexture(luigiWinText);
 	SDL_DestroyTexture(peachText);
 	SDL_DestroyTexture(gameOverText);
 	SDL_DestroyTexture(nextLevelText);
@@ -181,14 +169,6 @@ void GameScreenLevel1::Render()
 	marioScoreTextRect.y = 6;
 	SDL_RenderCopy(mRenderer, marioScoreText, NULL, &marioScoreTextRect);
 	
-	// Render Luigi Score
-	luigiTextRect.x = 321;
-	luigiTextRect.y = 5;
-	SDL_RenderCopy(mRenderer, luigiText, NULL, &luigiTextRect);
-	luigiScoreTextRect.x = 425;
-	luigiScoreTextRect.y = 6;
-	SDL_RenderCopy(mRenderer, luigiScoreText, NULL, &luigiScoreTextRect);
-
 	if (paused)
 	{
 		mTransparency->Render(Vector2D(), SDL_FLIP_NONE);

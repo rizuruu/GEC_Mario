@@ -204,7 +204,7 @@ void GameScreen::LoadFont()
 	multiplyTextSurface = nullptr;
 
 	// MARIO
-	marioTextSurface = TTF_RenderText_Solid(fontMedium, "mario score:", colorRed);
+	marioTextSurface = TTF_RenderText_Solid(fontMedium, "score:", colorRed);
 	marioText = SDL_CreateTextureFromSurface(mRenderer, marioTextSurface);
 	SDL_QueryTexture(marioText, NULL, NULL, &marioTextRect.w, &marioTextRect.h);
 
@@ -288,15 +288,6 @@ void GameScreen::LoadPlayerScores()
 
 	SDL_FreeSurface(marioScoreTextSurface);
 	marioScoreTextSurface = nullptr;
-
-	// LUIGI SCORE
-	luigiScoreString = to_string(luigiScore);
-	luigiScoreTextSurface = TTF_RenderText_Solid(fontSmall, luigiScoreString.c_str(), colorFg);
-	luigiScoreText = SDL_CreateTextureFromSurface(mRenderer, luigiScoreTextSurface);
-	SDL_QueryTexture(luigiScoreText, NULL, NULL, &luigiScoreTextRect.w, &luigiScoreTextRect.h);
-
-	SDL_FreeSurface(luigiScoreTextSurface);
-	luigiScoreTextSurface = nullptr;
 }
 
 bool GameScreen::OpenOutFiles()
@@ -328,33 +319,6 @@ bool GameScreen::OpenOutFiles()
 	}
 	marioFileOut.close();
 
-	// LUIGI FILES
-	luigiFileOut.open("Score/LuigiScore.txt", ostream::trunc);
-	if (!luigiFileOut)
-	{
-		cout << endl << "Failed to open LuigiScore file for writing." << endl;
-		return false;
-	}
-	else
-	{
-		cout << endl << "Opened LuigiScore file for writing." << endl;
-		luigiFileOut << "0";
-	}
-	luigiFileOut.close();
-
-	luigiFileOut.open("Score/LuigiPeach.txt", ostream::trunc);
-	if (!luigiFileOut)
-	{
-		cout << endl << "Failed to open LuigiPeach file for writing." << endl;
-		return false;
-	}
-	else
-	{
-		cout << endl << "Opened LuigiPeach file for writing." << endl;
-		luigiFileOut << "0";
-	}
-	luigiFileOut.close();
-
 	return true;
 }
 
@@ -367,14 +331,6 @@ void GameScreen::WriteToFiles()
 	marioFileOut.open("Score/MarioPeach.txt");
 	marioFileOut << marioSavedPeach;
 	marioFileOut.close();
-
-	luigiFileOut.open("Score/LuigiScore.txt", ostream::trunc);
-	luigiFileOut << luigiScore;
-	luigiFileOut.close();
-
-	luigiFileOut.open("Score/LuigiPeach.txt");
-	luigiFileOut << luigiSavedPeach;
-	luigiFileOut.close();
 }
 
 bool GameScreen::OpenInFiles()
@@ -405,33 +361,6 @@ bool GameScreen::OpenInFiles()
 		marioFileIn >> marioSavedPeach;
 	}
 	marioFileIn.close();
-
-	// LUIGI FILES
-	luigiFileIn.open("Score/LuigiScore.txt");
-	if (!luigiFileIn)
-	{
-		cout << endl << "Failed to open LuigiScore file for reading." << endl;
-		return false;
-	}
-	else
-	{
-		cout << endl << "Opened LuigiScore file for reading." << endl;
-		luigiFileIn >> luigiScore;
-	}
-	luigiFileIn.close();
-
-	luigiFileIn.open("Score/LuigiPeach.txt");
-	if (!luigiFileIn)
-	{
-		cout << endl << "Failed to open LuigiPeach file for reading." << endl;
-		return false;
-	}
-	else
-	{
-		cout << endl << "Opened LuigiPeach file for reading." << endl;
-		luigiFileIn >> luigiSavedPeach;
-	}
-	luigiFileIn.close();
 
 	return true;
 }
