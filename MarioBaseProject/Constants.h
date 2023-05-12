@@ -1,9 +1,9 @@
 #pragma once
 
 // Game Strings
-#define GAME_TITLE "GEC"
+#define GAME_TITLE "GEC Mario"
 
-// Map and Screen Dimesions
+// Dimesions
 #define SCREEN_WIDTH					512
 #define SCREEN_HEIGHT					410
 
@@ -12,7 +12,7 @@
 #define MAP_HEIGHT						13
 #define MAP_WIDTH						17
 
-// Character Movement Constants
+// Movement Constants
 #define MOVEMENT_SPEED					0.03
 #define MOVEMENT_SPEED_INCREASE_RIGHT	200.0f
 #define MOVEMENT_SPEED_INCREASE_LEFT	-200.0f
@@ -29,7 +29,7 @@
 #define PLAYER_ANIMATION_DELAY			0.05
 #define ANIMATION_DELAY					0.15
 
-// Miscellaneous Constants
+// Others
 #define SCREENSHAKE_DURATION			0.25f
 #define MUSIC_TIMER						30000.0f
 #define START_TIMER						32000.0f

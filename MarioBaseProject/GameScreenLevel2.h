@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Commons.h"
 #include "GameScreen.h"
 #include "LevelMap.h"
 
@@ -12,15 +11,17 @@
 #include <Windows.h>
 #include <vector>
 
+using namespace std;
+
 class Texture2D;
 class Character;
 class PowBlock;
 
-class GameScreenLevel1 : GameScreen
+class GameScreenLevel2 : GameScreen
 {
 public:
-	GameScreenLevel1(SDL_Renderer* renderer);
-	~GameScreenLevel1();
+	GameScreenLevel2(SDL_Renderer* renderer);
+	~GameScreenLevel2();
 
 	void Render();
 	void Update(float deltaTime, SDL_Event e);
@@ -40,38 +41,29 @@ private:
 	void SetLevelMap();
 	LevelMap* mLevelMap;
 
-	void WallWrapping(Character* character);
+	float mBackgroundYPos;
+
+	void WallCollisions(Character* character);
 
 	HANDLE hConsole;
 	int redFont, greenFont, pinkFont, whiteFont;
 
 	// GAME OBJECTS
-	CharacterPeach* characterPeach;
 	void UpdatePeach(float deltaTime, SDL_Event e);
-	void SpawnPeach(Vector2D position, FACING direction);
+	void CreatePeach(Vector2D position, FACING direction);
+	CharacterPeach* characterPeach;
 
 	void UpdateCoin(float deltaTime, SDL_Event e);
-	void SpawnCoin(Vector2D position);
+	void CreateCoin(Vector2D position);
 	vector<CharacterCoin*> mCoins;
-
-	PowBlock* mPowBlock;
-	bool hitPowBlock;
-	float hitTimer;
-	void UpdatePOWBlock();
-
-	bool mScreenshake;
-	float mScreenshakeTime;
-	float mWobble;
-	float mBackgroundYPos;
-	void DoScreenShake();
 
 	// ENEMIES
 	void UpdateKoopas(float deltaTime, SDL_Event e);
-	void SpawnKoopa(Vector2D position, FACING direction);
+	void CreateKoopa(Vector2D position, FACING direction);
 	vector<CharacterKoopa*> mEnemyKoopa;
 
 	void UpdateGoombas(float deltaTime, SDL_Event e);
-	void SpawnGoomba(Vector2D position, FACING direction);
+	void CreateGoomba(Vector2D position, FACING direction);
 	vector<CharacterGoomba*> mEnemyGoomba;
 
 	float enemyTimer;

@@ -18,6 +18,8 @@ bool closeGame = false;
 
 int main(int argc, char* args[])
 {
+	cout << "Mario Bros. Stats Window" << endl;
+
 	InitSDL();
 
 	gameScreenManager = new GameScreenManager(gRenderer, SCREEN_MENU);
@@ -30,6 +32,14 @@ int main(int argc, char* args[])
 	}
 
 	gameScreenManager = new GameScreenManager(gRenderer, SCREEN_LEVEL1);
+	quit = false;
+	while (!quit && !closeGame)
+	{
+		Render();
+		quit = Update();
+	}
+
+	gameScreenManager = new GameScreenManager(gRenderer, SCREEN_LEVEL2);
 	quit = false;
 	while (!quit && !closeGame)
 	{
@@ -70,12 +80,8 @@ bool InitSDL()
 		{
 			cout << "Window was not created. Error: " << SDL_GetError();
 		}
-		
-		float scaleX = (float)1200 / (float)512;
-		float scaleY = (float)800 / (float)410;
 
 		gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
-		//SDL_RenderSetScale(gRenderer, scaleX, scaleY);
 
 		if (gRenderer != NULL)
 		{

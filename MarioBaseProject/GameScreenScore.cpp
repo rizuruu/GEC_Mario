@@ -15,6 +15,9 @@ GameScreenScore::~GameScreenScore()
 	delete characterMario;
 	characterMario = NULL;
 
+	delete characterLuigi;
+	characterLuigi = NULL;
+
 	delete characterPeach;
 	characterPeach = NULL;
 
@@ -85,6 +88,10 @@ GameScreenScore::~GameScreenScore()
 	SDL_DestroyTexture(marioScoreText);
 	SDL_DestroyTexture(marioFinalScoreText);
 	SDL_DestroyTexture(marioWinText);
+	SDL_DestroyTexture(luigiText);
+	SDL_DestroyTexture(luigiScoreText);
+	SDL_DestroyTexture(luigiFinalScoreText);
+	SDL_DestroyTexture(luigiWinText);
 	SDL_DestroyTexture(peachText);
 	SDL_DestroyTexture(gameOverText);
 	SDL_DestroyTexture(nextLevelText);
@@ -130,10 +137,49 @@ void GameScreenScore::Render()
 		characterPeach->Render(Vector2D(370, 110), SDL_FLIP_NONE);
 	}
 
+	// LUIGI SCORE
+	characterLuigi->Render(Vector2D(100, 220), SDL_FLIP_NONE);
+
+	multiplyTextRect.x = 150;
+	multiplyTextRect.y = 231;
+	SDL_RenderCopy(mRenderer, multiplyText, NULL, &multiplyTextRect);
+
+	coinTexture->Render(Vector2D(170, 229), SDL_FLIP_NONE);
+
+	luigiFinalScoreTextRect.x = 210;
+	luigiFinalScoreTextRect.y = 227;
+	SDL_RenderCopy(mRenderer, luigiFinalScoreText, NULL, &luigiFinalScoreTextRect);
+
+	if (luigiSavedPeach >= 1)
+	{
+		multiplyTextRect.x = 300;
+		multiplyTextRect.y = 231;
+		SDL_RenderCopy(mRenderer, multiplyText, NULL, &multiplyTextRect);
+	}
+
+	if (luigiSavedPeach == 1)
+	{
+		characterPeach->Render(Vector2D(330, 220), SDL_FLIP_NONE);
+	}
+	else if (luigiSavedPeach == 2)
+	{
+		characterPeach->Render(Vector2D(330, 220), SDL_FLIP_NONE);
+		characterPeach->Render(Vector2D(370, 220), SDL_FLIP_NONE);
+	}
+
 	// WINNER
-	marioWinTextRect.x = (SCREEN_WIDTH / 2) - (marioWinTextRect.w / 2);
-	marioWinTextRect.y = SCREEN_HEIGHT - 100;
-	SDL_RenderCopy(mRenderer, marioWinText, NULL, &marioWinTextRect);
+	if (marioScore > luigiScore)
+	{
+		marioWinTextRect.x = (SCREEN_WIDTH / 2) - (marioWinTextRect.w / 2);
+		marioWinTextRect.y = SCREEN_HEIGHT - 100;
+		SDL_RenderCopy(mRenderer, marioWinText, NULL, &marioWinTextRect);
+	}
+	else if (luigiScore > marioScore)
+	{
+		luigiWinTextRect.x = (SCREEN_WIDTH / 2) - (luigiWinTextRect.w / 2);
+		luigiWinTextRect.y = SCREEN_HEIGHT - 100;
+		SDL_RenderCopy(mRenderer, luigiWinText, NULL, &luigiWinTextRect);
+	}
 
 	// EXIT
 	exitTextRect.x = (SCREEN_WIDTH / 2) - (exitTextRect.w / 2);
@@ -167,6 +213,13 @@ bool GameScreenScore::SetUpScreen()
 	if (!characterMario->LoadFromFile("Images/Characters/Mario.png"))
 	{
 		cout << "Failed to load mario texture!";
+		return false;
+	}
+
+	characterLuigi = new Texture2D(mRenderer);
+	if (!characterLuigi->LoadFromFile("Images/Characters/Luigi.png"))
+	{
+		cout << "Failed to load luigi texture!";
 		return false;
 	}
 

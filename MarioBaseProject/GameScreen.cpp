@@ -155,14 +155,6 @@ void GameScreen::LoadFont()
 	SDL_FreeSurface(startTextSurface);
 	startTextSurface = nullptr;
 
-	// COPYRIGHT
-	copyrightTextSurface = TTF_RenderText_Solid(fontMedium, "©1983. ©1988. ©1999 NINTENDO", colorFg);
-	copyrightText = SDL_CreateTextureFromSurface(mRenderer, copyrightTextSurface);
-	SDL_QueryTexture(copyrightText, NULL, NULL, &copyrightTextRect.w, &copyrightTextRect.h);
-
-	SDL_FreeSurface(copyrightTextSurface);
-	copyrightTextSurface = nullptr;
-
 	// TITLE
 	titleTextSurface = TTF_RenderText_Solid(fontLarge, "PLAYER SCORES", colorFg);
 	titleText = SDL_CreateTextureFromSurface(mRenderer, titleTextSurface);
@@ -204,7 +196,7 @@ void GameScreen::LoadFont()
 	multiplyTextSurface = nullptr;
 
 	// MARIO
-	marioTextSurface = TTF_RenderText_Solid(fontMedium, "score:", colorRed);
+	marioTextSurface = TTF_RenderText_Solid(fontMedium, "mario score:", colorRed);
 	marioText = SDL_CreateTextureFromSurface(mRenderer, marioTextSurface);
 	SDL_QueryTexture(marioText, NULL, NULL, &marioTextRect.w, &marioTextRect.h);
 
@@ -237,6 +229,40 @@ void GameScreen::LoadFont()
 	SDL_FreeSurface(marioWinTextSurface);
 	marioWinTextSurface = nullptr;
 
+	// LUIGI
+	luigiTextSurface = TTF_RenderText_Solid(fontMedium, "luigi score:", colorGreen);
+	luigiText = SDL_CreateTextureFromSurface(mRenderer, luigiTextSurface);
+	SDL_QueryTexture(luigiText, NULL, NULL, &luigiTextRect.w, &luigiTextRect.h);
+
+	SDL_FreeSurface(luigiTextSurface);
+	luigiTextSurface = nullptr;
+
+	// LUIGI SCORE
+	luigiScoreString = to_string(luigiScore);
+	luigiScoreTextSurface = TTF_RenderText_Solid(fontSmall, luigiScoreString.c_str(), colorFg);
+	luigiScoreText = SDL_CreateTextureFromSurface(mRenderer, luigiScoreTextSurface);
+	SDL_QueryTexture(luigiScoreText, NULL, NULL, &luigiScoreTextRect.w, &luigiScoreTextRect.h);
+
+	SDL_FreeSurface(luigiScoreTextSurface);
+	luigiScoreTextSurface = nullptr;
+
+	// LUIGI FINAL SCORE
+	luigiFinalScoreString = to_string(luigiScore);
+	luigiFinalScoreTextSurface = TTF_RenderText_Solid(fontMedium, luigiFinalScoreString.c_str(), colorFg);
+	luigiFinalScoreText = SDL_CreateTextureFromSurface(mRenderer, luigiFinalScoreTextSurface);
+	SDL_QueryTexture(luigiFinalScoreText, NULL, NULL, &luigiFinalScoreTextRect.w, &luigiFinalScoreTextRect.h);
+
+	SDL_FreeSurface(luigiFinalScoreTextSurface);
+	luigiFinalScoreTextSurface = nullptr;
+
+	// LUIGI WIN
+	luigiWinTextSurface = TTF_RenderText_Solid(fontMedium, "PLAYER 'LUIGI' WINS!", colorGreen);
+	luigiWinText = SDL_CreateTextureFromSurface(mRenderer, luigiWinTextSurface);
+	SDL_QueryTexture(luigiWinText, NULL, NULL, &luigiWinTextRect.w, &luigiWinTextRect.h);
+
+	SDL_FreeSurface(luigiWinTextSurface);
+	luigiWinTextSurface = nullptr;
+
 	// PEACH
 	peachTextSurface = TTF_RenderText_Solid(fontLarge, "princess peach has been rescued", colorFg);
 	peachText = SDL_CreateTextureFromSurface(mRenderer, peachTextSurface);
@@ -254,7 +280,7 @@ void GameScreen::LoadFont()
 	gameOverTextSurface = nullptr;
 
 	// NEXT LEVEL
-	nextLevelTextSurface = TTF_RenderText_Solid(fontSmall, "'ESC' - EXIT", colorYellow);
+	nextLevelTextSurface = TTF_RenderText_Solid(fontSmall, "'ENTER' - LEVEL 2 || 'ESC' - EXIT", colorYellow);
 	nextLevelText = SDL_CreateTextureFromSurface(mRenderer, nextLevelTextSurface);
 	SDL_QueryTexture(nextLevelText, NULL, NULL, &nextLevelTextRect.w, &nextLevelTextRect.h);
 
@@ -288,6 +314,15 @@ void GameScreen::LoadPlayerScores()
 
 	SDL_FreeSurface(marioScoreTextSurface);
 	marioScoreTextSurface = nullptr;
+
+	// LUIGI SCORE
+	luigiScoreString = to_string(luigiScore);
+	luigiScoreTextSurface = TTF_RenderText_Solid(fontSmall, luigiScoreString.c_str(), colorFg);
+	luigiScoreText = SDL_CreateTextureFromSurface(mRenderer, luigiScoreTextSurface);
+	SDL_QueryTexture(luigiScoreText, NULL, NULL, &luigiScoreTextRect.w, &luigiScoreTextRect.h);
+
+	SDL_FreeSurface(luigiScoreTextSurface);
+	luigiScoreTextSurface = nullptr;
 }
 
 bool GameScreen::OpenOutFiles()
@@ -319,6 +354,33 @@ bool GameScreen::OpenOutFiles()
 	}
 	marioFileOut.close();
 
+	// LUIGI FILES
+	luigiFileOut.open("Score/LuigiScore.txt", ostream::trunc);
+	if (!luigiFileOut)
+	{
+		cout << endl << "Failed to open LuigiScore file for writing." << endl;
+		return false;
+	}
+	else
+	{
+		cout << endl << "Opened LuigiScore file for writing." << endl;
+		luigiFileOut << "0";
+	}
+	luigiFileOut.close();
+
+	luigiFileOut.open("Score/LuigiPeach.txt", ostream::trunc);
+	if (!luigiFileOut)
+	{
+		cout << endl << "Failed to open LuigiPeach file for writing." << endl;
+		return false;
+	}
+	else
+	{
+		cout << endl << "Opened LuigiPeach file for writing." << endl;
+		luigiFileOut << "0";
+	}
+	luigiFileOut.close();
+
 	return true;
 }
 
@@ -331,6 +393,14 @@ void GameScreen::WriteToFiles()
 	marioFileOut.open("Score/MarioPeach.txt");
 	marioFileOut << marioSavedPeach;
 	marioFileOut.close();
+
+	luigiFileOut.open("Score/LuigiScore.txt", ostream::trunc);
+	luigiFileOut << luigiScore;
+	luigiFileOut.close();
+
+	luigiFileOut.open("Score/LuigiPeach.txt");
+	luigiFileOut << luigiSavedPeach;
+	luigiFileOut.close();
 }
 
 bool GameScreen::OpenInFiles()
@@ -361,6 +431,33 @@ bool GameScreen::OpenInFiles()
 		marioFileIn >> marioSavedPeach;
 	}
 	marioFileIn.close();
+
+	// LUIGI FILES
+	luigiFileIn.open("Score/LuigiScore.txt");
+	if (!luigiFileIn)
+	{
+		cout << endl << "Failed to open LuigiScore file for reading." << endl;
+		return false;
+	}
+	else
+	{
+		cout << endl << "Opened LuigiScore file for reading." << endl;
+		luigiFileIn >> luigiScore;
+	}
+	luigiFileIn.close();
+
+	luigiFileIn.open("Score/LuigiPeach.txt");
+	if (!luigiFileIn)
+	{
+		cout << endl << "Failed to open LuigiPeach file for reading." << endl;
+		return false;
+	}
+	else
+	{
+		cout << endl << "Opened LuigiPeach file for reading." << endl;
+		luigiFileIn >> luigiSavedPeach;
+	}
+	luigiFileIn.close();
 
 	return true;
 }

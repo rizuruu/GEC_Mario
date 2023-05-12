@@ -79,6 +79,10 @@ GameScreenMenu::~GameScreenMenu()
 	SDL_DestroyTexture(marioScoreText);
 	SDL_DestroyTexture(marioFinalScoreText);
 	SDL_DestroyTexture(marioWinText);
+	SDL_DestroyTexture(luigiText);
+	SDL_DestroyTexture(luigiScoreText);
+	SDL_DestroyTexture(luigiFinalScoreText);
+	SDL_DestroyTexture(luigiWinText);
 	SDL_DestroyTexture(peachText);
 	SDL_DestroyTexture(gameOverText);
 	SDL_DestroyTexture(nextLevelText);
